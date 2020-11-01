@@ -16,6 +16,11 @@ router.post('/', (req, res) => {
 })
 
 function sendEmailOutlook(orderNr, res){
+
+    let response = {
+        status: ""
+    }
+
     let date = moment().add(3, 'days').calendar({sameElse: 'DD/MM/YYYY'});
     nodeoutlook.sendEmail({
     auth: {
@@ -30,11 +35,13 @@ function sendEmailOutlook(orderNr, res){
     attachments: [],
     onError: (e) => {
         console.log(e)
-        res.send("ERR")
+        response.status = "An error occured"
+        res.send(response)
     },
     onSuccess: (i) => {
         console.log(i)
-        res.send("Email sent")
+        response.status = "Email sent to costumer!"
+        res.send(response)
     }
 }
  
