@@ -18,7 +18,8 @@ router.post('/', (req, res) => {
 function sendEmailOutlook(orderNr, res){
 
     let response = {
-        status: ""
+        status: 200,
+        text: ""
     }
 
     let date = moment().add(3, 'days').calendar({sameElse: 'DD/MM/YYYY'});
@@ -35,12 +36,13 @@ function sendEmailOutlook(orderNr, res){
     attachments: [],
     onError: (e) => {
         console.log(e)
-        response.status = "An error occured"
+        response.status = 500
+        response.text = "An error occured"
         res.send(response)
     },
     onSuccess: (i) => {
         console.log(i)
-        response.status = "Email sent to costumer!"
+        response.text = "Email sent to costumer!"
         res.send(response)
     }
 }
